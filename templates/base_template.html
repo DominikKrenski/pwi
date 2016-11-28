@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Projekt zaliczeniowy PWI. Aplikacja do zarządzania bazą danych">
+  <meta name="keywords" content="pwi, mysql, zarządzanie bazą danych, pdo, pdo_mysql">
+  <meta name="author" content="Dominik Kreński">
+  <title>System zarządzania bazą danych</title>
+
+  {% block stylesheets %}
+  {% endblock %}
+</head>
+<body onscroll="addShadowToHeader()">
+
+  <!-- UTWORZENIE NAGŁÓWKA STRONY -->
+  <div id="page-header">
+    <div id="header-image">
+      <img src="images/header-logo.png" alt="Logo aplikacji">
+    </div>
+
+    <div id="style-menu">
+      <button class="header-button" type="button">Wybierz styl</button>
+      <div id="style-content">
+        <ul>
+          <li class="first-li">PODSTAWOWY</li>
+          <li class="second-li">ROZSZERZONY</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="lang-menu">
+      <button class="header-button" type="button">Wybierz język</button>
+      <div id="lang-content">
+        <ul>
+          <li class="first-li">POLSKI</li>
+          <li class="third-li">ENGLISH</li>
+          <li class="second-li">PUSTY</li>
+        </ul>
+      </div>
+    </div>
+  </div> <!-- KONIEC NAGŁÓWKA -->
+
+  <!-- UTWORZENIE GŁÓWNEGO CIAŁA STRONY -->
+  <div id="container">
+  {% block content %}
+
+  {% endblock %}
+</div> <!-- KONIEC GŁÓWNEGO CIAŁA STRONY -->
+{% block scripts %}
+<script src="js/main.js"></script>
+{% endblock %}
+</body>
+</html>
