@@ -11,14 +11,16 @@
   </div>
 
   <div id="loginform-content">
-    <input type="text" name="userName" placeholder="Nazwa użytkownika" />
-    <input type="text" name="userPassword" placeholder="Hasło" />
-    <input type="text" name="databaseName" placeholder="Nazwa bazy danych" />
-    <input type="text" name="hostName" placeholder="Nazwa lub adres hosta" />
-    <input type="text" name="port" placeholder="Numer portu (domyślnie: 3306)" />
-    <input type="text" name="unixSocket" placeholder="Gniazdo Unix (domyślnie: /tmp/mysql.sock)" />
-    <input type="text" name="charset" placeholder="Kodowanie (domyślnie: UTF-8)" />
-    <input type="submit" id="loginform-submit-button" value="WYŚLIJ" />
+    <form id="loginform" name="loginform" action="management.php" method="POST">
+      <input type="text" name="userName" placeholder="Nazwa użytkownika" />
+      <input type="text" name="userPassword" placeholder="Hasło" />
+      <input type="text" name="databaseName" placeholder="Nazwa bazy danych" />
+      <input type="text" name="hostName" placeholder="Nazwa lub adres hosta (domyślnie: localhost)" />
+      <input type="text" name="port" placeholder="Numer portu (domyślnie: 3306)" />
+      <input type="text" name="unixSocket" placeholder="Gniazdo Unix (domyślnie: /tmp/mysql.sock)" />
+      <input type="text" name="charset" placeholder="Kodowanie (domyślnie: UTF-8)" />
+      <input type="submit" id="loginform-submit-button" value="WYŚLIJ" />
+    </form>
   </div>
 </div>
 {% endblock %}
