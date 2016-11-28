@@ -191,7 +191,7 @@ body {
 #loginform-container {
   position: absolute;
   width: 50%;
-  height: 420px;
+  height: 550px;
   left: 25%;
   top: 200px;
   background-color: white;
@@ -231,6 +231,7 @@ body {
   margin-top: 20px;
   margin-left: 63px;
   font-size: 20px;
+  padding-left: 5px;
   border-radius: 9px 9px 9px 9px;
   -moz-border-radius: 9px 9px 9px 9px;
   -webkit-border-radius: 9px 9px 9px 9px;
