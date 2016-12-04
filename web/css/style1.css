@@ -132,7 +132,6 @@ body {
 #style-menu ul {
   margin: 0;
   padding: 0;
-  text-decoration: none;
   list-style: none;
 }
 
@@ -142,6 +141,11 @@ body {
   height: 50px;
   line-height: 50px;
   font-size: 18px;
+}
+
+#style-menu a {
+  text-decoration: none;
+  color: white;
 }
 
 #style-menu li:hover {
@@ -182,6 +186,11 @@ body {
   font-size: 18px;
 }
 
+#lang-menu a {
+  text-decoration: none;
+  color: white;
+}
+
 #lang-menu li:hover {
   background-color: rgb(119, 118, 32);
 }
@@ -191,7 +200,7 @@ body {
 #loginform-container {
   position: absolute;
   width: 50%;
-  height: 550px;
+  height: 530px;
   left: 25%;
   top: 200px;
   background-color: white;
@@ -226,10 +235,10 @@ body {
 }
 
 #loginform-content input {
-  width: 80%;
+  width: 65%;
   height: 30px;
-  margin-top: 20px;
-  margin-left: 63px;
+  margin-top: 5px;
+  /*margin-left: 63px;*/
   font-size: 20px;
   padding-left: 5px;
   border-radius: 9px 9px 9px 9px;
@@ -237,8 +246,40 @@ body {
   -webkit-border-radius: 9px 9px 9px 9px;
 }
 
+#loginform-content p {
+  display: inline-block;
+  width: 20%;
+  font-size: 20px;
+  margin-left: 20px;
+  margin-right: 30px;
+  margin-top: 15px;
+  text-align: left;
+  margin-bottom: 3px;
+  padding: 0px;
+}
+
+#loginform-content .loginform-error {
+  width: 50%;
+  margin-left: 29%;
+  margin-top: 0px;
+  padding-top: 0px;
+  color: red;
+  font-size: 15px;
+  visibility: hidden;
+}
+
 #loginform-submit-button {
   background-color: rgba(37, 111, 170, 0.95);
   color: white;
+  margin-left: 125px;
 }
 /* ==============KONIEC============================== */
+
+
+/* Style związane z obsługą błędów formularza */
+
+/* ===============KONIEC============================= */
+.field-required-error {
+  background-color: rgba(236, 114, 97, 0.79);
+  border-color: red;
+}

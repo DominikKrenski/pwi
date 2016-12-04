@@ -6,7 +6,7 @@
   <meta name="description" content="Projekt zaliczeniowy PWI. Aplikacja do zarządzania bazą danych">
   <meta name="keywords" content="pwi, mysql, zarządzanie bazą danych, pdo, pdo_mysql">
   <meta name="author" content="Dominik Kreński">
-  <title>System zarządzania bazą danych</title>
+  <title>{{ langArray['title'] }}</title>
 
   {% block stylesheets %}
   {% endblock %}
@@ -20,22 +20,22 @@
     </div>
 
     <div id="style-menu">
-      <button class="header-button" type="button">Wybierz styl</button>
+      <button class="header-button" type="button">{{ langArray['stylebutton'] }}</button>
       <div id="style-content">
         <ul>
-          <li class="first-li">PODSTAWOWY</li>
-          <li class="second-li">ROZSZERZONY</li>
+          <li class="first-li"><a href="{{ uri }}?style=basic">{{ langArray['style'][0] }}</a></li>
+          <li class="second-li"><a href="{{ uri }}?style=extended">{{ langArray['style'][1] }}</a></li>
         </ul>
       </div>
     </div>
 
     <div id="lang-menu">
-      <button class="header-button" type="button">Wybierz język</button>
+      <button class="header-button" type="button">{{ langArray['langbutton'] }}</button>
       <div id="lang-content">
         <ul>
-          <li class="first-li">POLSKI</li>
-          <li class="third-li">ENGLISH</li>
-          <li class="second-li">PUSTY</li>
+          <li class="first-li"><a href="{{ uri }}?lang=pl">{{ langArray['language'][0] }}</a></li>
+          <li class="third-li"><a href="{{ uri }}?lang=en">{{ langArray['language'][1] }}</a></li>
+          <li class="second-li"><a href="{{ uri }}?lang=de">{{ langArray['language'][2] }}</a></li>
         </ul>
       </div>
     </div>
@@ -49,6 +49,7 @@
 </div> <!-- KONIEC GŁÓWNEGO CIAŁA STRONY -->
 {% block scripts %}
 <script src="js/main.js"></script>
+<script src="js/language_selector.js"></script>
 {% endblock %}
 </body>
 </html>
