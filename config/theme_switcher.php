@@ -7,17 +7,20 @@ if (isset($_GET['style'])) {
   {
     case 'basic':
     $_SESSION['style'] = $style;
-    setcookie('style', $style, time() + 3600);
+    //$_SESSION['lastActivity'] = time();
+    setcookie('style', $style, time() + 60);
     break;
 
     case 'extended':
     $_SESSION['style'] = $style;
-    setcookie('style', $style, time() + 3600);
+    //$_SESSION['lastActivity'] = time();
+    setcookie('style', $style, time() + 60);
     break;
 
     default:
     $_SESSION['style'] = 'basic';
-    setcookie('style', 'basic', time() + 3600);
+    //$_SESSION['lastActivity'] = time();
+    setcookie('style', 'basic', time() + 60);
     $style = 'basic';
   }
 } elseif (isset($_SESSION['style'])) {

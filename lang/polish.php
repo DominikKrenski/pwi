@@ -14,5 +14,9 @@ $langArray = array(
   'charset' => 'Kodowanie',
   'loginbutton' => 'ZALOGUJ',
   'emptyerror' => 'Pole wymagane',
-  'formaterror' => 'Zły format'
+  'formaterror' => 'Zły format',
+  'newtable' => 'NOWA TABELA',
+  'sql' => 'SQL',
+  'logout' => 'WYLOGUJ',
+  'tablelist' => 'TABELE'
 );

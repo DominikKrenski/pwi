@@ -220,3 +220,66 @@ body {
   background-color: rgba(236, 114, 97, 0.79);
   border-color: red;
 }
+
+/* Style związane z górnym panelem */
+#top-panel {
+  height: 70px;
+  width: 85%;
+  float: right;
+  background-color: rgba(94, 99, 102, 0.99);
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+  border-bottom-color: white;
+  padding-bottom: 0px;
+}
+
+#top-panel ul {
+  list-style: none;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+#top-panel li {
+  display: inline-block;
+  width: 200px;
+  height: 30px;
+  background-color: rgba(43, 56, 68, 0.95);
+  text-align: center;
+  margin-right: 20px;
+  line-height: 30px;
+  border: 1px solid white;
+}
+
+#top-panel a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  width: 200px;
+  height: 30px;
+}
+
+#top-panel li:hover a {
+  color: rgb(176, 173, 160);
+}
+
+/* ================KONIEC========================== */
+
+/* Style związane z lewym panelem */
+#left-panel {
+  position: absolute;
+  height: 1000px;
+  width: 15%;
+  background-color: rgba(94, 99, 102, 0.99);
+  border: 0px solid #000000;
+  border-right-style: solid;
+  border-right-width: thin;
+  border-right-color: white;
+  color: white;
+}
+
+
+
+#left-panel h2 {
+  margin-top: 15px;
+  text-align: center;
+}

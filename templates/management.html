@@ -1,0 +1,25 @@
+{% extends 'base_template.html' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ styleFile }}">
+{% endblock %}
+
+{% block content %}
+<div id="top-panel">
+  <ul>
+    <li><a href="#">{{ langArray['newtable'] }}</a></li>
+    <li><a href="#">{{ langArray['sql'] }}</a></li>
+    <li><a href="#">{{ langArray['logout'] }}</a></li>
+  </ul>
+</div>
+
+<div id="left-panel">
+  <h2>{{ langArray['tablelist'] }}</h2>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ parent() }}
+
+{% endblock %}

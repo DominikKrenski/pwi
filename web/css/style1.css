@@ -283,3 +283,78 @@ body {
   background-color: rgba(236, 114, 97, 0.79);
   border-color: red;
 }
+
+/* Style związane z górnym panelem */
+#top-panel {
+  height: 70px;
+  width: 85%;
+  float: right;
+  background-color: rgba(6, 49, 83, 0.95);
+  border-radius: 0px 15px 0px 0px;
+  -moz-border-radius: 0px 15px 0px 0px;
+  -webkit-border-radius: 0px 15px 0px 0px;
+  border: 0px solid #000000;
+  background-color: rgba(6, 49, 83, 0.95);
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+  border-bottom-color: white;
+  padding-bottom: 0px;
+}
+
+#top-panel ul {
+  list-style: none;
+  /*background-color: green;*/
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+#top-panel li {
+  display: inline-block;
+  width: 200px;
+  height: 30px;
+  background-color: rgb(7, 121, 177);
+  text-align: center;
+  margin-right: 20px;
+  line-height: 30px;
+  border-radius: 18px 18px 18px 18px;
+  -moz-border-radius: 18px 18px 18px 18px;
+  -webkit-border-radius: 18px 18px 18px 18px;
+  border: 1px solid white;
+}
+
+#top-panel a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  width: 200px;
+  height: 30px;
+}
+
+#top-panel li:hover a {
+  color: rgb(217, 185, 21);
+}
+
+/* ================KONIEC========================== */
+
+/* Style związane z lewym panelem */
+#left-panel {
+  position: absolute;
+  height: 1000px;
+  width: 15%;
+  background-color: rgba(6, 49, 83, 0.95);
+  border-radius: 15px 0px 0px 15px;
+  -moz-border-radius: 15px 15px 15px 15px;
+  -webkit-border-radius: 15px 0px 0px 15px;
+  border: 0px solid #000000;
+  border-right-style: solid;
+  border-right-width: thin;
+  border-right-color: white;
+  color: white;
+}
+
+
+
+#left-panel h2 {
+  margin-top: 25px;
+  text-align: center;
+}

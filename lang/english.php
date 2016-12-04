@@ -14,5 +14,9 @@ $langArray = array(
   'charset' => 'Charset',
   'loginbutton' => 'LOG IN',
   'emptyerror' => 'Field required',
-  'formaterror' => 'Wrong format'
+  'formaterror' => 'Wrong format',
+  'newtable' => 'NEW TABLE',
+  'sql' => 'SQL',
+  'logout' => 'LOG OUT',
+  'tablelist' => 'TABLES'
 );
