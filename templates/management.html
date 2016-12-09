@@ -15,11 +15,30 @@
 
 <div id="left-panel">
   <h2>{{ langArray['tablelist'] }}</h2>
+  <ul>
+    {% if tableList is not empty %}
+      {% for table in tableList %}
+      <li><a href="#" onclick="showTableStructure(event)">{{ table }}</a></li>
+      {% endfor %}
+    {% endif %}
+  </ul>
 </div>
 
+<div id="main-content">
+  {% if connectionError is defined %}
+  <div class="connection-error">
+    <div class="connection-error-header">
+      <h2>{{ langArray['errorHeader'] }}</h2>
+    </div>
+    <div class="connection-error-content">
+      <p>{{ connectionError }}</p>
+    </div>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}
 
 {% block scripts %}
 {{ parent() }}
-
+<script src="js/management.js"></script>
 {% endblock %}

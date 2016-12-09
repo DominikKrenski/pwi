@@ -18,5 +18,8 @@ $langArray = array(
   'newtable' => 'NOWA TABELA',
   'sql' => 'SQL',
   'logout' => 'WYLOGUJ',
-  'tablelist' => 'TABELE'
+  'tablelist' => 'TABELE',
+  'errorHeader' => 'BŁĄD',
+  'structureTableHeading' => 'Struktura tabeli',
+  'drop' => 'Usuń'
 );

@@ -358,3 +358,85 @@ body {
   margin-top: 25px;
   text-align: center;
 }
+
+#left-panel ul {
+  list-style: none;
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+#left-panel a {
+  color: white;
+  text-decoration: none;
+  font-size: 105%;
+}
+
+#left-panel a:hover {
+  color: rgb(217, 185, 21);
+}
+
+#left-panel li {
+  height: 30px;
+  text-align: center;
+}
+
+/* Style związane z elementem strony, w którym będą wyświetlane wyniki zapytań */
+#main-content {
+  float: none;
+  width: 84%;
+  float: right;
+  height: 100%;
+}
+
+#structure-table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  border-spacing: 0px;
+  color: white;
+}
+
+#structure-table caption {
+  font-size: 180%;
+}
+
+#structure-table, #structure-table th, #structure-table td {
+  border-collapse: collapse;
+}
+
+#structure-table th, #structure-table td {
+  border: 1px solid white;
+  width: 150px;
+  text-align: center;
+}
+
+.connection-error {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  background-color: white;
+  border: 2px solid red;
+}
+
+.connection-error-header {
+  background-color: blue;
+  height: 40px;
+  text-align: center;
+  background-color: rgb(201, 88, 77);
+  color: white;
+}
+
+.connection-error-header h2 {
+  margin-top: 0px;
+}
+
+.connection-error-content {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#structure-table a {
+  text-decoration: none;
+  color: rgb(236, 220, 85);
+}

@@ -33,9 +33,9 @@ if (isset($_GET['lang'])) {
 } else {
   $acceptedLanguage = Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
 
-  if (strpos($acceptedLanguage, 'pl')) {
+  if (strpos($acceptedLanguage, 'pl') !== FALSE) {
     $lang = 'pl';
-  } elseif (strpos($acceptedLanguage, 'en')) {
+  } elseif (strpos($acceptedLanguage, 'en') !== FALSE) {
     $lang = 'en';
   } else {
     $lang = 'pl';
