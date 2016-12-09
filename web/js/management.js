@@ -45,7 +45,7 @@ function dropColumnFromTable(event)
     if (this.readyState == 4) {
       if (this.status == 200) {
         if (this.responseText != null) {
-
+          document.getElementById('main-content').innerHTML = this.responseText;
         }
       }
     }
