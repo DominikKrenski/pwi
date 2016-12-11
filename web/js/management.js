@@ -54,23 +54,147 @@ function dropColumnFromTable(event)
   ajaxRequest.send(null);
 }
 
+function createTable(event)
+{
+  event.preventDefault();
+
+  var ajaxRequest = createAjaxRequest();
+
+  if (ajaxRequest === false) {
+    alert ("Przeglądarka nie wspiera technologii Ajax");
+  }
+
+  var form = document.forms[0];
+  //var numberOfRows = document.getElementById('create-table').rows.length - 2;
+
+  var tableName = form.elements['tableName'];
+  var fieldName = form.elements['fieldName[]'];
+  var dataType = form.elements['dataType[]'];
+  var dataSize = form.elements['dataSize[]'];
+  var defaultValue = form.elements['defaultValue[]'];
+  var allowNull = form.elements['allowNull[]'];
+  var primary = form.elements['primary[]'];
+  var increment = form.elements['increment[]'];
+
+  var queryString = "tableName=" + tableName.value + "&";
+
+  for (var i = 0; i < fieldName.length; i++) {
+    queryString += "fieldName[]=" + fieldName[i].value + "&";
+  }
+
+  for (var i = 0; i < dataType.length; i++) {
+    queryString += "dataType[]=" + dataType[i].value + "&";
+  }
+
+  for (var i = 0; i < dataType.length; i++) {
+    queryString += "dataSize[]=" + dataSize[i].value + "&";
+  }
+
+  for (var i = 0; i < defaultValue.length; i++) {
+    queryString += "defaultValue[]=" + defaultValue[i].value + "&";
+  }
+
+  for (var i = 0; i < allowNull.length; i++) {
+    if (!allowNull[i].checked) {
+      allowNull[i].value = "no";
+    }
+    queryString += "allowNull[]=" + allowNull[i].value + "&";
+  }
+
+  for (var i = 0; i < primary.length; i++) {
+    if (!primary[i].checked) {
+      primary[i].value = "no";
+    }
+    queryString += "primary[]=" + primary[i].value + "&";
+  }
+
+  for (var i = 0; i < increment.length; i++) {
+    if (!increment[i].checked) {
+      increment[i].value = "no";
+    }
+    queryString += "increment[]=" + increment[i].value + "&";
+  }
+  alert(queryString);
+  ajaxRequest.open("POST", "createtable.php", true);
+  ajaxRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  ajaxRequest.onreadystatechange = function() {
+    if (this.readyState == 4) {
+      if (this.status == 200) {
+        alert(this.responseText)
+        if (this.responseText != null) {
+          document.getElementById('main-content').innerHTML = this.responseText;
+        }
+      }
+    }
+  }
+  ajaxRequest.send(queryString);
+}
+
+function showCreateTableForm(event)
+{
+  event.preventDefault();
+
+  var target = event.target;
+  var href = target.href;
+
+  var ajaxRequest = createAjaxRequest();
+
+  if (ajaxRequest === false) {
+    alert("Przeglądarka nie wspiera technologii Ajax");
+  }
+
+  ajaxRequest.open("GET", href, true);
+
+  ajaxRequest.onreadystatechange = function() {
+    if (this.readyState == 4) {
+      if (this.status == 200) {
+        if (this.responseText != null) {
+          document.getElementById('main-content').innerHTML = this.responseText;
+        }
+      }
+    }
+  }
+  ajaxRequest.send(null);
+}
+
+function addRow()
+{
+  var table = document.getElementById('create-table');
+  var index = table.rows.length - 1;
+  var row = table.insertRow(index);
+  var cells = [];
+
+  for (var i = 0; i < 7; i++) {
+    cells[i] = row.insertCell(i);
+  }
+
+  cells[0].innerHTML = '<input type="text" name="fieldName[]">';
+  cells[1].innerHTML = '<select name="dataType[]"> <option value="integer">INTEGER</option><option value="varchar">VARCHAR</option><option value="boolean">BOOLEAN</option></select>';
+  cells[2].innerHTML = '<input type="text" name="dataSize[]">';
+  cells[3].innerHTML = '<input type="text" name="defaultValue[]">';
+  cells[4].innerHTML = '<input type="checkbox" name="allowNull[]" value="yes">';
+  cells[5].innerHTML = '<input type="checkbox" name="primary[]" value="yes">';
+  cells[6].innerHTML = '<input type="checkbox" name="increment[]" value="yes">';
+}
+
+function removeRow()
+{
+  var table = document.getElementById('create-table');
+  var index = table.rows.length - 2;
+
+  if (index > 2) {
+    table.deleteRow(index);
+  }
+}
+
 function createAjaxRequest()
 {
   try {
     var request = new XMLHttpRequest();
   }
-  catch (ex1) {
-    try {
-      request = new ActiveXObject("Msxml2.XMLHTTP");
-    }
-    catch (ex2) {
-      try {
-        request = new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      catch (ex3) {
-        request = false;
-      }
-    }
+  catch (ex) {
+    request = false;
   }
   return request;
 }

@@ -363,3 +363,63 @@ body {
   text-decoration: none;
   color: rgb(18, 196, 137);
 }
+
+#add-remove-button {
+  width: 840px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#add-remove-button-inner {
+  width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0px;
+}
+
+#add-button {
+  display: inline-block;
+  margin-top: 20px;
+  margin-right: 50px;
+  font-size: 15px;
+  font-family: cursive;
+}
+
+#remove-button {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 15px;
+  font-family: cursive;
+}
+
+#create-table {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 0px;
+  color: white;
+}
+
+#create-table caption {
+  margin-bottom: 20px;
+}
+
+#create-table caption input {
+  margin-left: 20px;
+}
+
+#submit-row input {
+  font-size: 20px;
+  font-family: cursive;
+
+}
+
+#create-table, #create-table th, #create-table td {
+  border-collapse: collapse;
+}
+
+#create-table th, #create-table td {
+  border: 1px solid white;
+  width: 120px;
+  text-align: center;
+}
