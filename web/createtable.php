@@ -54,6 +54,7 @@ if (isset($_POST['tableName']) && isset($_POST['fieldName']) && isset($_POST['da
 
     $stmt = $connection->prepare($statement);
     $stmt->execute();
+    echo "OK";
 
   } catch (PDOException $ex) {
     $message = $ex->getMessage();

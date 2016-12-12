@@ -106,7 +106,6 @@ function createTable(event)
   }
 
   var form = document.forms[0];
-  //var numberOfRows = document.getElementById('create-table').rows.length - 2;
 
   var tableName = form.elements['tableName'];
   var fieldName = form.elements['fieldName[]'];
@@ -160,16 +159,33 @@ function createTable(event)
   ajaxRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
   ajaxRequest.onreadystatechange = function() {
-    if (this.readyState == 4) {
-      if (this.status == 200) {
-        alert(this.responseText)
-        if (this.responseText != null) {
-          document.getElementById('main-content').innerHTML = this.responseText;
+    addLinkTable(this, tableName);
+  }
+  ajaxRequest.send(queryString);
+}
+
+function addLinkTable(that, tableName)
+{
+  if (that.readyState == 4) {
+    if (that.status == 200) {
+      if (that.responseText != null) {
+        if (that.responseText == "OK") {
+          var tableList = document.getElementById('table-list');
+          var li = document.createElement('li');
+          var link = document.createElement('a');
+          link.innerHTML = tableName.value;
+          link.setAttribute('href', '#');
+          link.setAttribute('onclick', 'showTableStructure(event)');
+          li.appendChild(link);
+          tableList.appendChild(li);
+          document.getElementById('main-content').innerHTML = "";
+        }
+        else {
+          document.getElementById('main-content').innerHTML = that.responseText;
         }
       }
     }
   }
-  ajaxRequest.send(queryString);
 }
 
 function showCreateTableForm(event)
