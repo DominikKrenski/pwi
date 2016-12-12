@@ -15,6 +15,40 @@ if (isset($_GET['name'])) {
   showTableStructure($_GET['name'], $langArray);
 }
 
+if (isset($_GET['dropTable'])) {
+  dropTable($_GET['dropTable']);
+}
+
+function dropTable($tableName)
+{
+  /* Sprawdzenie czy nazwa nie zawiera niedozwolonych znaków */
+  if (preg_match('/[^A-Za-z0-9_.]/', $tableName)) {
+    echo "<h2>Nazwa tabeli zawiera niedozwolone znaki</h2>";
+    die();
+  }
+
+  try {
+    $connection = new PDO($_SESSION['dsn'], $_SESSION['userName'], $_SESSION['userPassword'], [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::FETCH_ASSOC
+    ]);
+
+    $stmt = $connection ->prepare("DROP TABLE $tableName");
+    $stmt->execute();
+    echo "OK";
+  }
+  catch (PDOException $ex) {
+    $message = $ex->getMessage();
+    echo "<div class=\"connection-error\">
+      <div class=\"connection-error-header\">
+        <h2>" . $langArray['errorHeader'] . "</h2>
+      </div>
+      <div class=\"connection-error-content\">
+        <p>$message</p>
+      </div>
+    </div>";
+  }
+}
 
 function removeTableColumn($tableName, $columnName, $langArray)
 {
@@ -121,6 +155,7 @@ function createStructureTable($result, $tableName, $langArray)
     $structureTable .= '</tr>';
   }
 
+  $structureTable .= "<tr><td colspan=\"6\"><a href=\"tablestructure.php?dropTable=$tableName\" onclick=\"dropTable(event)\">Usuń tabelę</a></td></tr>";
   $structureTable .= "</table>";
   echo $structureTable;
 

@@ -54,6 +54,47 @@ function dropColumnFromTable(event)
   ajaxRequest.send(null);
 }
 
+function dropTable(event)
+{
+  event.preventDefault();
+  event.stopPropagation();
+
+  var target = event.target;
+  var href = target.href;
+  var tableName = href.substring(53);
+
+  var ajaxRequest = createAjaxRequest();
+
+  if (ajaxRequest === false) {
+    alert ("Przeglądarka nie wspiera technologii Ajax");
+  }
+
+  ajaxRequest.open("GET", href, true);
+
+  ajaxRequest.onreadystatechange = function() {
+    if (this.readyState == 4) {
+      if (this.status == 200) {
+        if (this.responseText != null) {
+          if (this.responseText == "OK") {
+            var tableList = document.getElementById('table-list');
+            var ulList = document.querySelectorAll('#table-list li');
+            for (var i = 0; i < ulList.length; i++) {
+              if ((ulList[i].innerText == tableName) || (ulList[i].textContent == tableName)) {
+                tableList.removeChild(ulList[i]);
+                break;
+              }
+            }
+            var parent = document.getElementById('main-content');
+            var child = document.getElementById('structure-table');
+            parent.removeChild(child);
+          }
+        }
+      }
+    }
+  }
+  ajaxRequest.send(null);
+}
+
 function createTable(event)
 {
   event.preventDefault();

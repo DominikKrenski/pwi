@@ -15,7 +15,7 @@
 
 <div id="left-panel">
   <h2>{{ langArray['tablelist'] }}</h2>
-  <ul>
+  <ul id="table-list">
     {% if tableList is not empty %}
       {% for table in tableList %}
       <li><a href="#" onclick="showTableStructure(event)">{{ table }}</a></li>
