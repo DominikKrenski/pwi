@@ -69,11 +69,34 @@ if (isset($_POST['tableName']) && isset($_POST['fieldName']) && isset($_POST['da
   }
 }
 
-if (isset($_GET['errorStringPL'])) {
+if (isset($_GET['errorString'])) {
+  $errorString = $_GET['errorString'];
+  $errorStrings = explode("$", $errorString);
+
+  switch ($lang)
+  {
+    case "pl":
+    $errorMessage = $errorStrings[0];
+    break;
+    case "en":
+    $errorMessage = $errorStrings[1];
+    break;
+    default:
+    $errorMessage = $errorStrings[0];
+  }
+
+  if (!preg_match('/^<ul>(<li>[^<>\/]+<\/li>)+<\/ul>$/', $errorMessage)) {
+    echo "Niedozwolone znaki";
+    die();
+  }
+  echo $errorMessage;
+}
+
+/*if (isset($_GET['errorStringPL'])) {
   $errorString = $_GET['errorStringPL'];
   if (!preg_match('/^<ul>(<li>[^<>\/]+<\/li>)+<\/ul>$/', $errorString)) {
     echo "Niedozwolone znaki";
     die();
   }
   echo $errorString;
-}
+}*/
