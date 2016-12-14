@@ -154,8 +154,8 @@ function createTable(event)
     alert ("Przeglądarka nie wspiera technologii Ajax");
   }
 
-  var errorString = validateTableForm(tableName, fieldName, dataType, dataSize, defaultValue);
-  if (errorString.length == 9) {
+  var errorStringPL = validateTableForm(tableName, fieldName, dataType, dataSize, defaultValue);
+  if (errorStringPL.length == 9) {
     ajaxRequest.open("POST", "createtable.php", true);
     ajaxRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
@@ -165,7 +165,7 @@ function createTable(event)
     ajaxRequest.send(queryString);
   }
   else {
-    ajaxRequest.open("GET", "createtable.php?errorString=" + errorString);
+    ajaxRequest.open("GET", "createtable.php?errorStringPL=" + errorStringPL);
     ajaxRequest.onreadystatechange = function() {
       if (this.readyState == 4) {
         if (this.status == 200) {
@@ -244,7 +244,7 @@ function showCreateTableForm(event)
 function validateTableForm(tableName, fieldName, dataType, dataSize, defaultValue)
 {
   var errorFlag = false;
-  var errorString = "<ul>";
+  var errorStringPL = "<ul>";
 
   /*Sprawdzenie czy pole tableName jest puste.
    * Jeśli tak wyświetlenie informacji o błędzie.
@@ -253,13 +253,13 @@ function validateTableForm(tableName, fieldName, dataType, dataSize, defaultValu
   */
   if (checkIfFieldIsEmpty(tableName.value)) {
     highlightErrorField(tableName);
-    errorString += "<li>Nazwa tabeli nie może być pusta</li>";
+    errorStringPL += "<li>Nazwa tabeli nie może być pusta</li>";
     errorFlag = true;
   }
   else {
     if (checkIfContainsIllegalCharacters(tableName.value)) {
       highlightErrorField(tableName);
-      errorString += "<li>Nazwa tabeli może zawierać jedynie znaki [A-Z a-z . _]</li>";
+      errorStringPL += "<li>Nazwa tabeli może zawierać jedynie znaki [A-Z a-z . _]</li>";
       errorFlag = true;
     }
   }
@@ -271,13 +271,13 @@ function validateTableForm(tableName, fieldName, dataType, dataSize, defaultValu
   for (var i = 0; i < fieldName.length; i++) {
     if (checkIfFieldIsEmpty(fieldName[i].value)) {
       highlightErrorField(fieldName[i]);
-      errorString += "<li>Nazwa pola nie może być pusta</li>";
+      errorStringPL += "<li>Nazwa pola nie może być pusta</li>";
       errorFlag = true;
     }
     else {
       if (checkIfContainsIllegalCharacters(fieldName[i].value)) {
         highlightErrorField(fieldName[i]);
-        errorString += "<li>Nazwa pola może zawierać jedynie znaki [A-Z a-z . _]</li>";
+        errorStringPL += "<li>Nazwa pola może zawierać jedynie znaki [A-Z a-z . _]</li>";
       }
     }
   }
@@ -289,7 +289,7 @@ function validateTableForm(tableName, fieldName, dataType, dataSize, defaultValu
     if (!checkIfFieldIsEmpty(dataSize[i].value)) {
       if (!checkIfNumber(dataSize[i].value)) {
         highlightErrorField(dataSize[i]);
-        errorString += "<li>Rozmiar danych musi być liczbą</li>"
+        errorStringPL += "<li>Rozmiar danych musi być liczbą</li>"
         errorFlag = true;
       }
     }
@@ -306,13 +306,13 @@ function validateTableForm(tableName, fieldName, dataType, dataSize, defaultValu
     if (dataType[i].value == "varchar") {
       if (checkIfFieldIsEmpty(dataSize[i].value)) {
         highlightErrorField(dataSize[i]);
-        errorString += "<li>Nie podano rozmiaru dla pola typu VARCHAR</li>";
+        errorStringPL += "<li>Nie podano rozmiaru dla pola typu VARCHAR</li>";
         errorFlag = true;
       }
     }
     if (dataType[i].value == "boolean") {
       if (!checkIfFieldIsEmpty(dataSize[i].value)) {
-        errorString += "<li>Nie można ustawić długości zmiennej typu BOOLEAN</li>"
+        errorStringPL += "<li>Nie można ustawić długości zmiennej typu BOOLEAN</li>"
         highlightErrorField(dataSize[i]);
         errorFlag = true;
       }
@@ -329,7 +329,7 @@ function validateTableForm(tableName, fieldName, dataType, dataSize, defaultValu
   for (var i = 0; i < defaultValue.length; i++) {
     if (dataType[i].value == "integer" && !checkIfFieldIsEmpty(defaultValue[i].value)) {
       if (!checkIfNumber(defaultValue[i].value)) {
-        errorString += "<li>Wartością domyślną dla typu INTEGER może być tylko liczba całkowita</li>";
+        errorStringPL += "<li>Wartością domyślną dla typu INTEGER może być tylko liczba całkowita</li>";
         highlightErrorField(defaultValue[i]);
         errorFlag = true;
       }
@@ -339,14 +339,14 @@ function validateTableForm(tableName, fieldName, dataType, dataSize, defaultValu
       if (!checkIfFieldIsEmpty(defaultValue[i].value)) {
         if (defaultValue[i].value != "1" && defaultValue[i].value != "0" && defaultValue[i].value != "true" && defaultValue[i].value != "false") {
           highlightErrorField(defaultValue[i]);
-          errorString += "<li>Dozwolonymi wartościami dla typu BOOLEAN są: true, false, 1 lub 0</li>";
+          errorStringPL += "<li>Dozwolonymi wartościami dla typu BOOLEAN są: true, false, 1 lub 0</li>";
           errorFlag = true;
         }
       }
     }
   }
-  errorString += "</ul>";
-  return errorString;
+  errorStringPL += "</ul>";
+  return errorStringPL;
 }
 
 function checkIfContainsIllegalCharacters(value)

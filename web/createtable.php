@@ -69,8 +69,8 @@ if (isset($_POST['tableName']) && isset($_POST['fieldName']) && isset($_POST['da
   }
 }
 
-if (isset($_GET['errorString'])) {
-  $errorString = $_GET['errorString'];
+if (isset($_GET['errorStringPL'])) {
+  $errorString = $_GET['errorStringPL'];
   if (!preg_match('/^<ul>(<li>[^<>\/]+<\/li>)+<\/ul>$/', $errorString)) {
     echo "Niedozwolone znaki";
     die();
