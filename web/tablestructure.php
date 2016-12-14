@@ -22,7 +22,7 @@ if (isset($_GET['dropTable'])) {
 function dropTable($tableName)
 {
   /* Sprawdzenie czy nazwa nie zawiera niedozwolonych znaków */
-  if (preg_match('/[^A-Za-z0-9_.]/', $tableName)) {
+  if (preg_match('/[^A-Za-z0-9_.ĘęÓóĄąŚśŁłŻżŹźĆćŃń]/', $tableName)) {
     echo "<h2>Nazwa tabeli zawiera niedozwolone znaki</h2>";
     die();
   }
@@ -53,7 +53,7 @@ function dropTable($tableName)
 function removeTableColumn($tableName, $columnName, $langArray)
 {
   /* Sprawdzenie czy nazwy nie zawierają niedozwolonych znaków */
-  if (preg_match('/[^A-Za-z0-9_.]/', $tableName) || preg_match('/[^A-Za-z0-9_.]/', $columnName)) {
+  if (preg_match('/[^A-Za-z0-9_.ĘęÓóĄąŚśŁłŻżŹźĆćŃń]/', $tableName) || preg_match('/[^A-Za-z0-9_.]/', $columnName)) {
     echo "<h2>Nazwa tabeli lub kolumny zawiera niedozwolone znaki</h2>";
     die();
   }
@@ -86,7 +86,7 @@ function removeTableColumn($tableName, $columnName, $langArray)
 function showTableStructure($tableName, $langArray)
 {
   /* Sprawdzenie, czy przekazana nazwa tabeli zawiera jedynie dozwolone znaki */
-  if (preg_match('/[^A-Za-z0-9_.]/', $tableName)) {
+  if (preg_match('/[^A-Za-z0-9_.ĘęÓóĄąŚśŁłŻżŹźĆćŃń]/', $tableName)) {
     echo "<h2>Nazwa tabeli zawiera niedozwolone znaki</h2>";
     die();
   }

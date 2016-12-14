@@ -68,3 +68,12 @@ if (isset($_POST['tableName']) && isset($_POST['fieldName']) && isset($_POST['da
       </div>";
   }
 }
+
+if (isset($_GET['errorString'])) {
+  $errorString = $_GET['errorString'];
+  if (!preg_match('/^<ul>(<li>[^<>\/]+<\/li>)+<\/ul>$/', $errorString)) {
+    echo "Niedozwolone znaki";
+    die();
+  }
+  echo $errorString;
+}
