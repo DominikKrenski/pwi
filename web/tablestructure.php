@@ -64,7 +64,7 @@ function removeTableColumn($tableName, $columnName, $langArray)
       PDO::FETCH_ASSOC
     ]);
 
-    $stmt = $connection->prepare("ALTER TABLE $tableName DROP COLUMN $columnName");
+    $stmt = $connection->prepare("ALTER TABLE $tableName DROP COLUMN `$columnName`");
     $stmt->execute();
 
     showTableStructure($tableName, $langArray);

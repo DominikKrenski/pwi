@@ -99,12 +99,6 @@ function createTable(event)
 {
   event.preventDefault();
 
-  var ajaxRequest = createAjaxRequest();
-
-  if (ajaxRequest === false) {
-    alert ("Przeglądarka nie wspiera technologii Ajax");
-  }
-
   var form = document.forms[0];
 
   var tableName = form.elements['tableName'];
@@ -154,14 +148,21 @@ function createTable(event)
     }
     queryString += "increment[]=" + increment[i].value + "&";
   }
-  alert(queryString);
-  ajaxRequest.open("POST", "createtable.php", true);
-  ajaxRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-  ajaxRequest.onreadystatechange = function() {
-    addLinkTable(this, tableName);
+  var ajaxRequest = createAjaxRequest();
+  if (ajaxRequest === false) {
+    alert ("Przeglądarka nie wspiera technologii Ajax");
   }
-  ajaxRequest.send(queryString);
+
+  if (validateTableForm(tableName, fieldName, dataType, dataSize, defaultValue)) {
+    ajaxRequest.open("POST", "createtable.php", true);
+    ajaxRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    ajaxRequest.onreadystatechange = function() {
+      addLinkTable(this, tableName);
+    }
+    ajaxRequest.send(queryString);
+  }
 }
 
 function addLinkTable(that, tableName)
@@ -215,6 +216,143 @@ function showCreateTableForm(event)
   ajaxRequest.send(null);
 }
 
+function validateTableForm(tableName, fieldName, dataType, dataSize, defaultValue)
+{
+  var errorFlag = false;
+  var errorString = "<ul>";
+
+  /*Sprawdzenie czy pole tableName jest puste.
+   * Jeśli tak wyświetlenie informacji o błędzie.
+   * Jeśli nie, sprawdzenie czy nazwa tabeli nie zawiera niedozwolonych znaków,
+   * jeśli zawiera -> wyświetlenie informacji o błędzie
+  */
+  if (checkIfFieldIsEmpty(tableName.value)) {
+    highlightErrorField(tableName);
+    errorString += "<li>Nazwa tabeli nie może być pusta</li>"
+    errorFlag = true;
+  }
+  else {
+    if (checkIfContainsIllegalCharacters(tableName.value)) {
+      highlightErrorField(tableName);
+      errorString += "<li>Nazwa tabeli może zawierać jedynie znaki [A-Z a-z . _]</li>"
+      errorFlag = true;
+    }
+  }
+
+  /* Sprawdzenie, czy poszczególne nazwy pól nie są puste.
+   * Jeśli tak -> wyświetlenie informacji o błędzie.
+  */
+  for (var i = 0; i < fieldName.length; i++) {
+    if (checkIfFieldIsEmpty(fieldName[i].value)) {
+      highlightErrorField(fieldName[i]);
+      errorFlag = true;
+    }
+  }
+
+  /* Sprawdzenie czy pola dataSize zawierają jedynie cyfry.
+   * Jeśli nie -> wyświetlenie informacji o błędzie.
+  */
+  for (var i = 0; i < dataSize.length; i++) {
+    if (!checkIfFieldIsEmpty(dataSize[i].value)) {
+      if (!checkIfNumber(dataSize[i].value)) {
+        highlightErrorField(dataSize[i]);
+        errorFlag = true;
+      }
+    }
+  }
+
+  /* Sprawdzenie, czy jeśli użytkownik wybrał typ danych VARCHAR
+   * została wprowadzona długość pola.
+   * Jeśli nie -> wyświetlenie informacji o błędzie
+  */
+  for (var i = 0; i < dataSize.length; i++) {
+    if (dataType[i].value == "varchar") {
+      if (checkIfFieldIsEmpty(dataSize[i].value)) {
+        highlightErrorField(dataSize[i]);
+        errorFlag = true;
+      }
+    }
+  }
+
+  /* Sprawdzenie, czy jeśli użytkownik wybrał typ danych INTEGER
+   * wartość domyślna zawiera jedynie cyfry.
+   * Jeśli nie -> wyświetlenie informacji o błędzie
+   * Oraz, czy jeśli użytkownik wybrał typ danych BOOLEAN
+   * wartość domyślna przyjmuje jedną z wartości: 0, 1, true, false
+   * Jeśli nie -> wyświetlenie informacji o błędzie
+   * Oraz, czy jeśli użytkownik wybrał typ danych BOOLEAN
+   * pole dataSize jest puste.
+   * Jeśli nie -> wyświetlenie informacji o błędzie.
+  */
+  for (var i = 0; i < defaultValue.length; i++) {
+    if (dataType[i].value == "integer" && !checkIfFieldIsEmpty(defaultValue[i].value)) {
+      if (!checkIfNumber(defaultValue[i].value)) {
+        highlightErrorField(defaultValue[i]);
+        errorFlag = true;
+      }
+    }
+
+    if (dataType[i].value == "boolean") {
+      if (!checkIfFieldIsEmpty(defaultValue[i].value)) {
+        if (defaultValue[i].value != "1" && defaultValue[i].value != "0" && defaultValue[i].value != "true" && defaultValue[i].value != "false") {
+          highlightErrorField(defaultValue[i]);
+          errorFlag = true;
+        }
+      }
+      if (!checkIfFieldIsEmpty(dataSize[i]).value) {
+        highlightErrorField(dataSize[i]);
+        errorFlag = true;
+      }
+    }
+  }
+  if (errorFlag == true) {
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+function checkIfContainsIllegalCharacters(value)
+{
+  if (/[^A-Za-z0-9_.]/.test(value)) {
+    return true;
+  }
+  return false;
+}
+
+function checkIfNumber(value)
+{
+  if (/^\d+$/.test(value)) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+function checkIfFieldIsEmpty(value)
+{
+  value = "" + value;
+  value = value.replace(/ /g, "");
+  if (value == "" || value.length == 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function highlightErrorField(field)
+{
+  field.className = 'field-required-error';
+}
+
+function removeHighlight(event)
+{
+  var element = event.target;
+  element.className = "";
+}
+
 function addRow()
 {
   var table = document.getElementById('create-table');
@@ -226,10 +364,10 @@ function addRow()
     cells[i] = row.insertCell(i);
   }
 
-  cells[0].innerHTML = '<input type="text" name="fieldName[]">';
+  cells[0].innerHTML = '<input type="text" name="fieldName[]" onfocus="removeHighlight(event)">';
   cells[1].innerHTML = '<select name="dataType[]"> <option value="integer">INTEGER</option><option value="varchar">VARCHAR</option><option value="boolean">BOOLEAN</option></select>';
-  cells[2].innerHTML = '<input type="text" name="dataSize[]">';
-  cells[3].innerHTML = '<input type="text" name="defaultValue[]">';
+  cells[2].innerHTML = '<input type="text" name="dataSize[]" onfocus="removeHighlight(event)">';
+  cells[3].innerHTML = '<input type="text" name="defaultValue[]" onfocus="removeHighlight(event)">';
   cells[4].innerHTML = '<input type="checkbox" name="allowNull[]" value="yes">';
   cells[5].innerHTML = '<input type="checkbox" name="primary[]" value="yes">';
   cells[6].innerHTML = '<input type="checkbox" name="increment[]" value="yes">';
