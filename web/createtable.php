@@ -86,17 +86,13 @@ if (isset($_GET['errorString'])) {
   }
 
   if (!preg_match('/^<ul>(<li>[^<>\/]+<\/li>)+<\/ul>$/', $errorMessage)) {
-    echo "Niedozwolone znaki";
+    if ($lang == "en") {
+      echo "Illegal characters. Possible attack.";
+    }
+    else {
+      echo "Niedozwolone znaki. Możliwy atak.";
+    }
     die();
   }
   echo $errorMessage;
 }
-
-/*if (isset($_GET['errorStringPL'])) {
-  $errorString = $_GET['errorStringPL'];
-  if (!preg_match('/^<ul>(<li>[^<>\/]+<\/li>)+<\/ul>$/', $errorString)) {
-    echo "Niedozwolone znaki";
-    die();
-  }
-  echo $errorString;
-}*/

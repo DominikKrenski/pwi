@@ -8,8 +8,8 @@ require_once "../lang/$langFile";
 echo "<div id=\"create-table-div\">
   <form id=\"create-table-form\" name=\"create-table-form\" action=\"createtable.php\" method=\"POST\">
     <table id=\"create-table\">
-      <caption>Nazwa tabeli: <input type=\"text\" name=\"tableName\" onfocus=\"removeHighlight(event)\"></caption>
-      <tr><th>Nazwa pola</th><th>Typ</th><th>Rozmiar</th><th>Wart. domyślna</th><th>Dozw. null</th><th>K G</th><th>A Z</th></tr>
+      <caption>".$langArray['tableNameField'].":<input type=\"text\" name=\"tableName\" onfocus=\"removeHighlight(event)\"></caption>
+      <tr><th>".$langArray['fieldName'].":</th><th>".$langArray['dataType']."</th><th>".$langArray['dataSize']."</th><th>".$langArray['defaultValue']."</th><th>".$langArray['nullable']."</th><th>".$langArray['primaryKey']."</th><th>".$langArray['autoIncrement']."</th></tr>
       <tr>
         <td><input type=\"text\" name=\"fieldName[]\" onfocus=\"removeHighlight(event)\"></td>
         <td>
@@ -41,14 +41,14 @@ echo "<div id=\"create-table-div\">
         <td><input type=\"checkbox\" name=\"increment[]\" value=\"yes\"></td>
       </tr>
       <tr>
-        <td id=\"submit-row\" colspan=\"7\"><input type=\"submit\" value=\"Utwórz\" onclick=\"createTable(event)\"></td>
+        <td id=\"submit-row\" colspan=\"7\"><input type=\"submit\" value=\"".$langArray['createButton']."\" onclick=\"createTable(event)\"></td>
       </tr>
     </table>
   </form>
   <div id=\"add-remove-button\">
     <div id=\"add-remove-button-inner\">
-      <button type=\"button\" id=\"add-button\" onclick=\"addRow()\">Dodaj wiersz</button>
-      <button type=\"button\" id=\"remove-button\" onclick=\"removeRow()\">Usuń wiersz</button>
+      <button type=\"button\" id=\"add-button\" onclick=\"addRow()\">".$langArray['addRow']."</button>
+      <button type=\"button\" id=\"remove-button\" onclick=\"removeRow()\">".$langArray['removeRow']."</button>
     </div>
   </div>
 </div>";
