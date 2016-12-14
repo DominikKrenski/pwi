@@ -155,7 +155,8 @@ function createStructureTable($result, $tableName, $langArray)
     $structureTable .= '</tr>';
   }
 
-  $structureTable .= "<tr><td colspan=\"6\"><a href=\"tablestructure.php?dropTable=$tableName\" onclick=\"dropTable(event)\">".$langArray['dropTable']."</a></td></tr>";
+  $structureTable .= "<tr><td id=\"structure-table-last-row\" colspan=\"6\"><a href=\"tablestructure.php?dropTable=$tableName\" onclick=\"dropTable(event)\">".$langArray['dropTable']."</a>
+                      <a href=\"modifytablecontentform.php?table=$tableName\" onclick=\"showTableContent(event)\">".$langArray['editTableContent']."</a></td></tr>";
   $structureTable .= "</table>";
   echo $structureTable;
 

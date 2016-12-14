@@ -23,6 +23,7 @@ $langArray = array(
   'structureTableHeading' => 'Struktura tabeli',
   'drop' => 'Usuń',
   'dropTable' => "Usuń tabelę",
+  'editTableContent' => 'Edytuj zawartość',
   'tableNameField' => 'Nazwa tabeli',
   'fieldName' => 'Nazwa pola',
   'dataType' => 'Typ',

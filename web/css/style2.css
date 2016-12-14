@@ -423,3 +423,7 @@ body {
   width: 120px;
   text-align: center;
 }
+
+#structure-table-last-row a {
+  margin-right: 40px;
+}
