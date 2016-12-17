@@ -55,10 +55,10 @@ function editTableContent(event, dataTypes, primaryKey)
         var option2 = document.createElement('option');
 
         option1.setAttribute('value', '1');
-        option1.text = 'True';
+        option1.text = 'true';
 
         option2.setAttribute('value', '0');
-        option2.text = 'False';
+        option2.text = 'false';
 
         if (tableRow.cells[i].innerHTML == 'true') {
           option1.selected = true;
@@ -75,7 +75,7 @@ function editTableContent(event, dataTypes, primaryKey)
         var input = document.createElement('input');
         input.setAttribute('type', 'text');
         input.setAttribute('value', tableRow.cells[i].innerHTML);
-        input.innerHTML = contentTable.rows[0].cells[i].innerHTML;
+        //input.innerHTML = contentTable.rows[0].cells[i].innerHTML;
 
         if (primaryKey[contentTable.rows[0].cells[i].innerHTML] == 'auto_increment') {
           input.disabled = true;
@@ -99,6 +99,24 @@ function editTableContent(event, dataTypes, primaryKey)
     formDiv.appendChild(form);
     mainContent.insertBefore(formDiv, contentTable);
   }
+  else {
+    var form = document.getElementById('modify-content-form');
+
+    for (var i = 0; i < tableRow.cells.length - 1; i++) {
+      if (form.elements[i].type == 'select-one') {
+        //console.log(form.elements[i][0]);
+        if (form.elements[i][0].text == tableRow.cells[i].innerHTML) {
+          form.elements[i][0].selected = true;
+        }
+        else {
+          form.elements[i][1].selected = true;
+        }
+      }
+      else {
+        form.elements[i].value = tableRow.cells[i].innerHTML;
+      }
+    }
+  }
 }
 
 
@@ -112,6 +130,5 @@ function validateUpdateTableContent(event, dataTypes, primaryKey)
 {
   event.preventDefault();
   event.stopPropagation();
-  console.log(dataTypes);
-  console.log(primaryKey);
+  alert('walidacja');
 }
