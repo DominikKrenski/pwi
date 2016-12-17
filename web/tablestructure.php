@@ -135,7 +135,7 @@ function createStructureTable($result, $tableName, $langArray)
   for ($i = 0; $i < count($columnNames); $i++) {
     $structureTable .= "<th>$columnNames[$i]</th>";
   }
-
+  $structureTable .= "<th>Modyfikacja</th>";
   $structureTable .= '</tr>';
 
   /* Wypełnienie wierszy tabeli */
@@ -145,17 +145,13 @@ function createStructureTable($result, $tableName, $langArray)
       if ($key == 'Field') {
         $fieldValue = $value;
       }
-      if ($key == "Extra") {
-        $structureTable .= "<td><a href=\"tablestructure.php?table=$tableName&column=$fieldValue\" onclick=\"dropColumnFromTable(event)\">" . $langArray['drop'] . "</a></td>";
-      }
-      else {
-        $structureTable .= "<td>$value</td>";
-      }
+      $structureTable .= "<td>$value</td>";
     }
+    $structureTable .= "<td><a href=\"tablestructure.php?table=$tableName&column=$fieldValue\" onclick=\"dropColumnFromTable(event)\">" . $langArray['drop'] . "</a></td>";
     $structureTable .= '</tr>';
   }
 
-  $structureTable .= "<tr><td id=\"structure-table-last-row\" colspan=\"6\"><a href=\"tablestructure.php?dropTable=$tableName\" onclick=\"dropTable(event)\">".$langArray['dropTable']."</a>
+  $structureTable .= "<tr><td id=\"structure-table-last-row\" colspan=\"7\"><a href=\"tablestructure.php?dropTable=$tableName\" onclick=\"dropTable(event)\">".$langArray['dropTable']."</a>
                       <a href=\"modifytablecontentform.php?table=$tableName\" onclick=\"showTableContent(event)\">".$langArray['editTableContent']."</a></td></tr>";
   $structureTable .= "</table>";
   echo $structureTable;
