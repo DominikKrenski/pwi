@@ -86,14 +86,12 @@ function createContentTable($tableName, $columnNames, $content)
       }
       $contentTable .= "<td>$value</td>";
     }
-
     $dataTypes = json_encode($temporaryArray);
     $primaryKey = json_encode($extraArray);
-    
-    $contentTable .= '<td id="content-table-last-cell"><a href="edittablecontent.php" onclick="editTableContent(event,'.htmlentities($dataTypes). ',' .htmlentities($primaryKey).')">Edytuj</a><a href="removetablecontent.php" onclick="removeTableContent(event)">Usuń</a></td>';
+    $contentTable .= '<td id="content-table-last-cell"><a href="edittablecontent.php" onclick="editTableContent(event,'.htmlentities($dataTypes). ',' .htmlentities($primaryKey) .')">Edytuj</a><a href="removerow.php" onclick="removeRow(event)">Usuń</a></td>';
     $contentTable .= "</tr>";
   }
-
+  $_SESSION['updateRowTableName'] = $tableName;
   $contentTable .= "</table>";
   echo $contentTable;
 }
