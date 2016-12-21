@@ -35,4 +35,9 @@ $langArray = array(
   'createButton' => 'Create',
   'addRow' => 'Add row',
   'removeRow' => 'Drop row',
+  'modify' => "Modification",
+  'contentTable' => 'Content of table',
+  'remove' => 'Drop',
+  'edit' => 'Edit',
+  'add' => 'Add entry',
 );

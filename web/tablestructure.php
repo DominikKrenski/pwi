@@ -135,7 +135,7 @@ function createStructureTable($result, $tableName, $langArray)
   for ($i = 0; $i < count($columnNames); $i++) {
     $structureTable .= "<th>$columnNames[$i]</th>";
   }
-  $structureTable .= "<th>Modyfikacja</th>";
+  $structureTable .= "<th>" . $langArray['modify'] . "</th>";
   $structureTable .= '</tr>';
 
   /* Wypełnienie wierszy tabeli */

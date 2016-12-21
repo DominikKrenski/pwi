@@ -35,4 +35,9 @@ $langArray = array(
   'createButton' => 'Utwórz',
   'addRow' => 'Dodaj wiersz',
   'removeRow' => 'Usuń wiersz',
+  'modify' => "Modyfikacja",
+  'contentTable' => 'Zawartość tabeli',
+  'remove' => 'Usuń',
+  'edit' => 'Edytuj',
+  'add' => 'Dodaj wpis',
 );

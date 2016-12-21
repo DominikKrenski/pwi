@@ -42,14 +42,14 @@ if (isset($_GET['table'])) {
 
     $connection = null;
 
-    createContentTable($tableName, $columnNames, $content, $lang);
+    createContentTable($tableName, $columnNames, $content, $lang, $langArray);
   }
   catch (PDOException $ex) {
     echo "BŁĄD";
   }
 }
 
-function createContentTable($tableName, $columnNames, $content, $lang)
+function createContentTable($tableName, $columnNames, $content, $lang, $langArray)
 {
   if (count($content) > 0) {
     /* Tablica przechowująca nazwy pól wraz z typem pola w formacie nazwaPola => typPola */
@@ -67,12 +67,12 @@ function createContentTable($tableName, $columnNames, $content, $lang)
       $extraArray[$outerArray['Field']] = $outerArray['Extra'];
     }
 
-    $contentTable = "<table id=\"content-table\"><caption>Zawartość tabeli '$tableName'</caption><tr>";
+    $contentTable = "<table id=\"content-table\"><caption>". $langArray['contentTable'] ." '$tableName'</caption><tr>";
 
     for ($i = 0; $i < count($columnNames); $i++) {
       $contentTable .= "<th>".$columnNames[$i]['Field']."</th>";
     }
-    $contentTable .= "<th>Modyfikacja</th></tr>";
+    $contentTable .= "<th>". $langArray['modify'] ."</th></tr>";
 
     foreach ($content as $outerTable) {
       $contentTable .= "<tr>";
@@ -89,12 +89,12 @@ function createContentTable($tableName, $columnNames, $content, $lang)
       }
       $dataTypes = json_encode($temporaryArray);
       $primaryKey = json_encode($extraArray);
-      $contentTable .= '<td id="content-table-last-cell"><a href="edittablecontent.php" onclick="editTableContent(event,'.htmlentities($dataTypes). ',' .htmlentities($primaryKey) .')">Edytuj</a><a href="removerow.php" onclick="removeRow(event)">Usuń</a></td>';
+      $contentTable .= '<td id="content-table-last-cell"><a href="edittablecontent.php" onclick="editTableContent(event,'.htmlentities($dataTypes). ',' .htmlentities($primaryKey) .')">'. $langArray['edit'] .'</a><a href="removerow.php" onclick="removeRow(event)">'. $langArray['remove'] .'</a></td>';
       $contentTable .= "</tr>";
     }
     $_SESSION['updateRowTableName'] = $tableName;
     $contentTable .= "</table>";
-    $contentTable .= '<button style="position: relative; left: 50%; " onclick="addEntryForm(event,'. htmlentities($dataTypes). ',' . htmlentities($primaryKey). ',' ."'$lang'" .')">Dodaj wpis</button>';
+    $contentTable .= '<button style="position: relative; left: 50%; " onclick="addEntryForm(event,'. htmlentities($dataTypes). ',' . htmlentities($primaryKey). ',' ."'$lang'" .')">'. $langArray['add'] .'</button>';
     echo $contentTable;
   }
   else {
