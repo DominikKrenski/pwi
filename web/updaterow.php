@@ -73,8 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   catch (PDOException $ex) {
     $message = $ex->getMessage();
     echo $message;
-    print_r ($connection->errorCode());
-    print_r ($connection->errorInfo());
   }
 }
 

@@ -509,3 +509,67 @@ body {
 #structure-table-last-row a {
   margin-right: 40px;
 }
+
+/*nowe*/
+#content-table {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 0px;
+  color: white;
+}
+
+#content-table caption {
+  margin-bottom: 20px;
+  font-size: 140%;
+}
+
+#content-table th, #content-table td {
+  border: 1px solid white;
+  width: 120px;
+  text-align: center;
+}
+
+#content-table, #content-table th, #content-table td {
+  border-collapse: collapse;
+}
+
+#content-table-last-cell a {
+  margin-left: 10px;
+  margin-right: 20px;
+  text-decoration: none;
+  color: rgb(18, 196, 137);
+}
+
+#modify-table-content-div {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  width: 40%;
+  background-color: rgba(6, 49, 83, 0.95);
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#modify-table-content-header {
+  font-size: 110%;
+  border-bottom: 2px solid white;
+  padding: 0px;
+}
+
+#modify-table-content-header p {
+  padding: 0px;
+  margin-bottom: 0px;
+}
+
+#modify-content-form p {
+  padding: 0px;
+  margin: 0px;
+}
+
+#modify-content-form input {
+  border-style: none;
+  width: 99%;
+  margin-bottom: 5px;
+}

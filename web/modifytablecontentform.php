@@ -42,56 +42,90 @@ if (isset($_GET['table'])) {
 
     $connection = null;
 
-    createContentTable($tableName, $columnNames, $content);
+    createContentTable($tableName, $columnNames, $content, $lang);
   }
   catch (PDOException $ex) {
     echo "BŁĄD";
   }
 }
 
-function createContentTable($tableName, $columnNames, $content)
+function createContentTable($tableName, $columnNames, $content, $lang)
 {
-  /* Tablica przechowująca nazwy pól wraz z typem pola w formacie nazwaPola => typPola */
-  $temporaryArray = [];
+  if (count($content) > 0) {
+    /* Tablica przechowująca nazwy pól wraz z typem pola w formacie nazwaPola => typPola */
+    $temporaryArray = [];
 
-  /* Tablica przechowująca nazwy pól wraz z zawartością pola EXTRA w formacie nazwaPola => EXTRA */
-  $extraArray = [];
+    /* Tablica przechowująca nazwy pól wraz z zawartością pola EXTRA w formacie nazwaPola => EXTRA */
+    $extraArray = [];
 
-  foreach ($columnNames as $outerArray) {
-    $pos = strpos($outerArray['Type'], '(');
-    $temporaryArray[$outerArray['Field']] = substr($outerArray['Type'], 0, $pos);
-  }
-
-  foreach ($columnNames as $outerArray) {
-    $extraArray[$outerArray['Field']] = $outerArray['Extra'];
-  }
-
-  $contentTable = "<table id=\"content-table\"><caption>Zawartość tabeli '$tableName'</caption><tr>";
-
-  for ($i = 0; $i < count($columnNames); $i++) {
-    $contentTable .= "<th>".$columnNames[$i]['Field']."</th>";
-  }
-  $contentTable .= "<th>Modyfikacja</th></tr>";
-
-  foreach ($content as $outerTable) {
-    $contentTable .= "<tr>";
-    foreach ($outerTable as $key => $value) {
-      if ($temporaryArray[$key] == 'tinyint') {
-        if ($value == 1) {
-          $value = "true";
-        }
-        else {
-          $value = "false";
-        }
-      }
-      $contentTable .= "<td>$value</td>";
+    foreach ($columnNames as $outerArray) {
+      $pos = strpos($outerArray['Type'], '(');
+      $temporaryArray[$outerArray['Field']] = substr($outerArray['Type'], 0, $pos);
     }
+
+    foreach ($columnNames as $outerArray) {
+      $extraArray[$outerArray['Field']] = $outerArray['Extra'];
+    }
+
+    $contentTable = "<table id=\"content-table\"><caption>Zawartość tabeli '$tableName'</caption><tr>";
+
+    for ($i = 0; $i < count($columnNames); $i++) {
+      $contentTable .= "<th>".$columnNames[$i]['Field']."</th>";
+    }
+    $contentTable .= "<th>Modyfikacja</th></tr>";
+
+    foreach ($content as $outerTable) {
+      $contentTable .= "<tr>";
+      foreach ($outerTable as $key => $value) {
+        if ($temporaryArray[$key] == 'tinyint') {
+          if ($value == 1) {
+            $value = "true";
+          }
+          else {
+            $value = "false";
+          }
+        }
+        $contentTable .= "<td>$value</td>";
+      }
+      $dataTypes = json_encode($temporaryArray);
+      $primaryKey = json_encode($extraArray);
+      $contentTable .= '<td id="content-table-last-cell"><a href="edittablecontent.php" onclick="editTableContent(event,'.htmlentities($dataTypes). ',' .htmlentities($primaryKey) .')">Edytuj</a><a href="removerow.php" onclick="removeRow(event)">Usuń</a></td>';
+      $contentTable .= "</tr>";
+    }
+    $_SESSION['updateRowTableName'] = $tableName;
+    $contentTable .= "</table>";
+    $contentTable .= '<button style="position: relative; left: 50%; " onclick="addEntryForm(event,'. htmlentities($dataTypes). ',' . htmlentities($primaryKey). ',' ."'$lang'" .')">Dodaj wpis</button>';
+    echo $contentTable;
+  }
+  else {
+    /* Tablica przechowująca nazwy pól wraz z typem pola w formacie nazwaPola => typPola */
+    $temporaryArray = [];
+
+    /* Tablica przechowująca nazwy pól wraz z zawartością pola EXTRA w formacie nazwaPola => EXTRA */
+    $extraArray = [];
+
+    foreach ($columnNames as $outerArray) {
+      $pos = strpos($outerArray['Type'], '(');
+      $temporaryArray[$outerArray['Field']] = substr($outerArray['Type'], 0, $pos);
+    }
+
+    foreach ($columnNames as $outerArray) {
+      $extraArray[$outerArray['Field']] = $outerArray['Extra'];
+    }
+
+    $contentTable = "<table id=\"content-table\"><caption>Zawartość tabeli '$tableName'</caption><tr>";
+
+    for ($i = 0; $i < count($columnNames); $i++) {
+      $contentTable .= "<th>".$columnNames[$i]['Field']."</th>";
+    }
+    $contentTable .= "<th>Modyfikacja</th></tr>";
+    $contentTable .= "</table>";
+
     $dataTypes = json_encode($temporaryArray);
     $primaryKey = json_encode($extraArray);
-    $contentTable .= '<td id="content-table-last-cell"><a href="edittablecontent.php" onclick="editTableContent(event,'.htmlentities($dataTypes). ',' .htmlentities($primaryKey) .')">Edytuj</a><a href="removerow.php" onclick="removeRow(event)">Usuń</a></td>';
-    $contentTable .= "</tr>";
+    $_SESSION['updateRowTableName'] = $tableName;
+
+    $contentTable .= '<button style="position: relative; left: 50%; " onclick="addEntryForm(event,'. htmlentities($dataTypes) . ', ' . htmlentities($primaryKey) . ',' . "'$lang'" .')">Dodaj wpis</button>';
+    echo $contentTable;
   }
-  $_SESSION['updateRowTableName'] = $tableName;
-  $contentTable .= "</table>";
-  echo $contentTable;
 }
