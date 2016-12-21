@@ -40,4 +40,6 @@ $langArray = array(
   'remove' => 'Drop',
   'edit' => 'Edit',
   'add' => 'Add entry',
+  'editEntry' => 'Update entry',
+  'save' => 'Save'
 );

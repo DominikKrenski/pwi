@@ -89,12 +89,13 @@ function createContentTable($tableName, $columnNames, $content, $lang, $langArra
       }
       $dataTypes = json_encode($temporaryArray);
       $primaryKey = json_encode($extraArray);
-      $contentTable .= '<td id="content-table-last-cell"><a href="edittablecontent.php" onclick="editTableContent(event,'.htmlentities($dataTypes). ',' .htmlentities($primaryKey) .')">'. $langArray['edit'] .'</a><a href="removerow.php" onclick="removeRow(event)">'. $langArray['remove'] .'</a></td>';
+      $languages = json_encode($langArray);
+      $contentTable .= '<td id="content-table-last-cell"><a href="edittablecontent.php" onclick="editTableContent(event,'.htmlentities($dataTypes). ',' .htmlentities($primaryKey). ','. htmlentities($languages) .')">'. $langArray['edit'] .'</a><a href="removerow.php" onclick="removeRow(event)">'. $langArray['remove'] .'</a></td>';
       $contentTable .= "</tr>";
     }
     $_SESSION['updateRowTableName'] = $tableName;
     $contentTable .= "</table>";
-    $contentTable .= '<button style="position: relative; left: 50%; " onclick="addEntryForm(event,'. htmlentities($dataTypes). ',' . htmlentities($primaryKey). ',' ."'$lang'" .')">'. $langArray['add'] .'</button>';
+    $contentTable .= '<button style="position: relative; left: 50%; " onclick="addEntryForm(event,'. htmlentities($dataTypes). ',' . htmlentities($primaryKey). ','. htmlentities($languages) .')">'. $langArray['add'] .'</button>';
     echo $contentTable;
   }
   else {
@@ -123,9 +124,10 @@ function createContentTable($tableName, $columnNames, $content, $lang, $langArra
 
     $dataTypes = json_encode($temporaryArray);
     $primaryKey = json_encode($extraArray);
+    $languages = json_encode($langArray);
     $_SESSION['updateRowTableName'] = $tableName;
 
-    $contentTable .= '<button style="position: relative; left: 50%; " onclick="addEntryForm(event,'. htmlentities($dataTypes) . ', ' . htmlentities($primaryKey) . ',' . "'$lang'" .')">Dodaj wpis</button>';
+    $contentTable .= '<button style="position: relative; left: 50%; " onclick="addEntryForm(event,'. htmlentities($dataTypes) . ', ' . htmlentities($primaryKey) . ',' . htmlentities($languages) .')">Dodaj wpis</button>';
     echo $contentTable;
   }
 }

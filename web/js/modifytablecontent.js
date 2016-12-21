@@ -22,7 +22,7 @@ function showTableContent(event)
   ajaxRequest.send(null);
 }
 
-function editTableContent(event, dataTypes, primaryKey)
+function editTableContent(event, dataTypes, primaryKey, languages)
 {
   event.preventDefault();
   var link = event.target;
@@ -30,7 +30,7 @@ function editTableContent(event, dataTypes, primaryKey)
 
   /* Wstawienie formularza edycji elementu tabeli */
   if (!document.getElementById('modify-table-content-div')) {
-    createUpdateForm(dataTypes, primaryKey, tableRow, link);
+    createUpdateForm(dataTypes, primaryKey, tableRow, link, languages);
   }
   else {
     /* Usunięcie formularza */
@@ -38,11 +38,11 @@ function editTableContent(event, dataTypes, primaryKey)
     child.parentNode.removeChild(child);
 
     /* Utworzenie formularza na nowo */
-    createUpdateForm(dataTypes, primaryKey, tableRow, link);
+    createUpdateForm(dataTypes, primaryKey, tableRow, link, languages);
   }
 }
 
-function createUpdateForm(dataTypes, primaryKey, tableRow, link)
+function createUpdateForm(dataTypes, primaryKey, tableRow, link, languages)
 {
   var oldData = {};
   var contentTable = document.getElementById('content-table');
@@ -50,7 +50,7 @@ function createUpdateForm(dataTypes, primaryKey, tableRow, link)
   var formDiv = document.createElement('div');
   var formDivHeader = document.createElement('div');
   var formHeaderText = document.createElement('p');
-  var formHeaderTextContent = document.createTextNode("Edytuj wpis:");
+  var formHeaderTextContent = document.createTextNode(languages['editEntry'] + ":");
   var form = document.createElement('form');
 
   formDivHeader.setAttribute('id', 'modify-table-content-header');
@@ -104,8 +104,8 @@ function createUpdateForm(dataTypes, primaryKey, tableRow, link)
 
   var updateButton = document.createElement('input');
   updateButton.setAttribute('type', 'submit');
-  updateButton.setAttribute('value', 'Zapisz');
-  updateButton.setAttribute('onclick', 'updateTableRow(event,' + JSON.stringify(dataTypes) + ', ' + JSON.stringify(primaryKey) + ')');
+  updateButton.setAttribute('value', languages['save']);
+  updateButton.setAttribute('onclick', 'updateTableRow(event,' + JSON.stringify(dataTypes) + ', ' + JSON.stringify(primaryKey) + ',' + JSON.stringify(languages) + ')');
 
   form.appendChild(updateButton);
 
@@ -123,12 +123,12 @@ function createUpdateForm(dataTypes, primaryKey, tableRow, link)
   localStorage.setItem('oldData', JSON.stringify(oldData));
 }
 
-function updateTableRow(event, dataTypes, primaryKey)
+function updateTableRow(event, dataTypes, primaryKey, languages)
 {
   event.preventDefault();
   event.stopPropagation();
 
-  var errorFlag = validateUpdateTableContent(dataTypes, primaryKey);
+  var errorFlag = validateUpdateTableContent(dataTypes, primaryKey, languages);
 
   if (!errorFlag) {
     var ajaxRequest = createAjaxRequest();
@@ -212,7 +212,7 @@ function removeRow(event)
   ajaxRequest.send(data);
 }
 
-function validateUpdateTableContent(dataTypes, primaryKey)
+function validateUpdateTableContent(dataTypes, primaryKey, languages)
 {
   var errorFlag = false;
 
@@ -222,7 +222,7 @@ function validateUpdateTableContent(dataTypes, primaryKey)
     if (dataTypes[form.elements[i].id] == 'int') {
       if (!/^\d+$/.test(form.elements[i].value)) {
         var nextElement = form.elements[i].nextElementSibling;
-        var errorText = document.createTextNode("Pole może zawierać tylko cyfry");
+        var errorText = document.createTextNode(languages['formaterror']);
         var paragraphError = document.createElement('P');
         paragraphError.setAttribute('class', 'field-required-error');
         paragraphError.appendChild(errorText);
@@ -234,7 +234,7 @@ function validateUpdateTableContent(dataTypes, primaryKey)
   return errorFlag;
 }
 
-function validateAddEntryForm(dataTypes)
+function validateAddEntryForm(dataTypes, languages)
 {
   var errorFlag = false;
 
@@ -244,7 +244,7 @@ function validateAddEntryForm(dataTypes)
     if ((dataTypes[form.elements[i].id] == 'int') && (form.elements[i].disabled) == false) {
       if (!/^\d+$/.test(form.elements[i].value)) {
         var nextElement = form.elements[i].nextElementSibling;
-        var errorText = document.createTextNode("Pole może zawierać tylko cyfry");
+        var errorText = document.createTextNode(languages['formaterror']);
         var paragraphError = document.createElement('p');
         paragraphError.setAttribute('class', 'field-required-error');
         paragraphError.appendChild(errorText);
@@ -256,30 +256,30 @@ function validateAddEntryForm(dataTypes)
   return errorFlag;
 }
 
-function addEntryForm(event, dataTypes, primaryKey, lang)
+function addEntryForm(event, dataTypes, primaryKey, languages)
 {
   event.preventDefault();
   event.stopPropagation();
 
   /* Wstawienie formularza dodawania wpisu do tabeli */
   if (!document.getElementById('modify-table-content-div')) {
-    createAddEntryForm(dataTypes, primaryKey, lang);
+    createAddEntryForm(dataTypes, primaryKey, languages);
   }
   else {
     var child = document.getElementById('modify-table-content-div');
     child.parentNode.removeChild(child);
-    createAddEntryForm(dataTypes, primaryKey, lang);
+    createAddEntryForm(dataTypes, primaryKey, languages);
   }
 }
 
-function createAddEntryForm(dataTypes, primaryKey, lang)
+function createAddEntryForm(dataTypes, primaryKey, languages)
 {
   var contentTable = document.getElementById('content-table');
   var mainContent = document.getElementById('main-content');
   var formDiv = document.createElement('div');
   var formDivHeader = document.createElement('div');
   var formHeaderText = document.createElement('p');
-  var formHeaderTextContent = document.createTextNode("Dodaj wpis:");
+  var formHeaderTextContent = document.createTextNode(languages['add']);
   var form = document.createElement('form');
   var autoIncrement = "";
 
@@ -325,11 +325,10 @@ function createAddEntryForm(dataTypes, primaryKey, lang)
     }
   }
 
-  console.log(autoIncrement);
   var createButton = document.createElement('input');
   createButton.setAttribute('type', 'submit');
   createButton.setAttribute('value', 'Zapisz');
-  createButton.setAttribute('onclick', 'addEntry(event,' + JSON.stringify(dataTypes) + ',"' + autoIncrement +'")');
+  createButton.setAttribute('onclick', 'addEntry(event,' + JSON.stringify(dataTypes) + ',"' + autoIncrement +'"' + ',' +JSON.stringify(languages) + ')');
   form.appendChild(createButton);
 
   formHeaderText.appendChild(formHeaderTextContent);
@@ -339,14 +338,12 @@ function createAddEntryForm(dataTypes, primaryKey, lang)
   mainContent.insertBefore(formDiv, contentTable);
 }
 
-function addEntry(event, dataTypes, autoIncrement)
+function addEntry(event, dataTypes, autoIncrement, languages)
 {
   event.preventDefault();
   event.stopPropagation();
-  console.log(dataTypes)
-  console.log(autoIncrement)
 
-  var errorFlag = validateAddEntryForm(dataTypes);
+  var errorFlag = validateAddEntryForm(dataTypes, languages);
 
   if (!errorFlag) {
     var ajaxRequest = createAjaxRequest();
