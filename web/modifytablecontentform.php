@@ -45,7 +45,16 @@ if (isset($_GET['table'])) {
     createContentTable($tableName, $columnNames, $content, $lang, $langArray);
   }
   catch (PDOException $ex) {
-    echo "BŁĄD";
+    $ex->getMessage();
+
+    echo "<div class=\"connection-error\">
+            <div class=\"connection-error-header\">
+              <h2>". $langArray['error-header'] ."</h2>
+            </div>
+            <div class=\"connection-error-content\">
+              <p>$message</p>
+            </div>
+          </div>";
   }
 }
 

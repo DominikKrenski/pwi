@@ -41,5 +41,8 @@ $langArray = array(
   'edit' => 'Edit',
   'add' => 'Add entry',
   'editEntry' => 'Update entry',
-  'save' => 'Save'
+  'save' => 'Save',
+  'rowDeleteMessage' => "Row has been deleted successfully",
+  'updateRowMessage' => 'Row has been updated successfully',
+  'addEntryMessage' => "Row has been added successfully"
 );

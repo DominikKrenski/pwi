@@ -34,12 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $queryString = rtrim($queryString, ',');
     $queryString .= ");";
-    /*foreach ($postData as $key => $value) {
-      $queryString .= "?,";
-    }
-
-    $queryString = rtrim($queryString, ',');
-    $queryString .= ');';*/
   }
   else {
     $increment = array_pop($postData);
@@ -90,10 +84,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $stmt->execute($tmpArray);
     $connection = null;
+
+    echo "<div class=\"connection-error\">
+            <div class=\"connection-error-content\">
+              <p>". $langArray['addEntryMessage'] ."</p>
+            </div>
+          </div>";
   }
   catch (PDOException $ex) {
     $message = $ex->getMessage();
-    echo $message;
+
+    echo "<div class=\"connection-error\">
+            <div class=\"connection-error-header\">
+              <h2>". $langArray['error-header'] ."</h2>
+            </div>
+            <div class=\"connection-error-content\">
+              <p>$message</p>
+            </div>
+          </div>";
   }
 }
 

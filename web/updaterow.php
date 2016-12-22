@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   foreach ($postData as $postKey => $postValue) {
     $queryString .= "$postKey= ?, ";
   }
+
   $queryString = rtrim($queryString);
   $queryString = rtrim($queryString, ',');
 
@@ -48,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   foreach ($postData as $key => $value) {
     $queryString .= " $key= ? AND";
-  }
+    }
 
   $queryString = substr($queryString, 0, strlen($queryString) - 3);
   $queryString = trim($queryString);
@@ -62,17 +63,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $connection->prepare($queryString);
 
     $tmpArray = array_merge($postData, $oldPostData);
+
     $bla = [];
     foreach ($tmpArray as $key => $value) {
-      $bla[] = $value;
+        $bla[] = $value;
     }
+
     $stmt->execute($bla);
 
     $connection = null;
+
+    echo "<div class=\"connection-error\">
+            <div class=\"connection-error-content\">
+              <p>". $langArray['updateRowMessage'] ."</p>
+            </div>
+          </div>";
   }
   catch (PDOException $ex) {
     $message = $ex->getMessage();
-    echo $message;
+
+    echo "<div class=\"connection-error\">
+            <div class=\"connection-error-header\">
+              <h2>". $langArray['errorHeader'] ."</h2>
+            </div>
+            <div class=\"connection-error-content\">
+              <p>$message</p>
+            </div>
+          </div>";
   }
 }
 
