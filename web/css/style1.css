@@ -573,3 +573,42 @@ body {
   width: 99%;
   margin-bottom: 5px;
 }
+
+/* FORMULARZ SQL */
+#execute-sql-form-div {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 0px;
+  color: white;
+}
+
+#execute-sql-form {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px rgb(255, 255, 255) solid;
+  background-color: rgba(6, 49, 83, 0.95);
+  padding-left: 10px;
+}
+
+#execute-sql-form p {
+  padding: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#submit-file {
+  margin-top: 10px;
+  position: relative;
+  left: 45%;
+}
+
+#result-div {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 0px;
+  color: white;
+  text-align: center;
+}
