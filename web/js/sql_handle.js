@@ -93,3 +93,29 @@ function parseForm(file)
     ajaxRequest.send(data);
   }
 }
+
+function handlePagination(event)
+{
+  event.preventDefault();
+  event.stopPropagation();
+
+  href = event.target.href;
+
+  var ajaxRequest = createAjaxRequest();
+
+  if (ajaxRequest == null) {
+    alert('Przeglądarka nie wspiera technologii Ajax');
+  }
+
+  ajaxRequest.open('GET', href, true);
+
+  ajaxRequest.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if (this.responseText != null) {
+        document.getElementById('main-content').innerHTML = this.responseText;
+      }
+    }
+  }
+
+  ajaxRequest.send(null);
+}

@@ -29,20 +29,23 @@ if (isset($_POST['query']) && isset($_POST['format'])) {
       PDO::FETCH_NUM
     ]);
 
-    $result = $connection->query($query, PDO::FETCH_ASSOC);
+    //$result = $connection->query($query, PDO::FETCH_ASSOC);
 
     if (preg_match("/^select/i", $query)) {
       if ($format == 'text') {
+        $result = $connection->query($query, PDO::FETCH_ASSOC);
         createFile($result);
         echo '<form action="download.php" method="POST">
                 <input id="submit-file" type="submit" value="Pobierz plik">
               </form>';
       }
       elseif ($format == 'json') {
+        $result = $connection->query($query, PDO::FETCH_ASSOC);
         generateJsonResponse($result);
       }
       else {
-        generateHtmlResponse($result);
+        //generateHtmlResponse($result);
+        generateHtmlResponse($connection, $query);
       }
     }
   }
@@ -78,7 +81,77 @@ function generateJsonResponse($result)
   echo '</div>';
 }
 
-function generateHtmlResponse($result)
+function generateHtmlResponse($connection, $query)
 {
-  
+
+  $tableKeys = [];
+  $numberOfRows = 0; // liczba wyników zapytania
+  $resultTable = "<div id=\"result-div\"><table id=\"result-table\"><tr>";
+  $tmpTable = "";
+
+  try {
+    /* Pierwsze zapytanie ma na celu sprawdzenie ile wyników
+     * zostało zwróconych
+    */
+    $result = $connection->query($query, PDO::FETCH_ASSOC);
+
+    foreach ($result as $inner) {
+      $numberOfRows++;
+    }
+
+    $numberOfPages = ceil($numberOfRows / 10);
+
+    $query1 = rtrim($query, ';');
+
+    $_SESSION['customQuery'] = $query1;
+    $_SESSION['rowsPerPage'] = 10;
+    $_SESSION['numberOfRows'] = $numberOfRows;
+    $_SESSION['numberOfPages'] = $numberOfPages;
+
+    $query1 = $query1 . " limit 0, 10;";
+
+    $counter = 0;
+
+    $result = $connection->query($query1, PDO::FETCH_ASSOC);
+
+    foreach ($result as $inner) {
+      if ($counter == 0) {
+        $tableKeys = array_keys($inner);
+      }
+      $tmpTable .= '<tr>';
+
+      foreach ($inner as $key => $value) {
+        $tmpTable .= "<td>$value</td>";
+      }
+
+      $tmpTable .= "</tr>";
+      $counter++;
+    }
+
+
+
+    foreach ($tableKeys as $value) {
+      $resultTable .= "<th>$value</th>";
+    }
+
+    $resultTable .= "</tr>";
+    $resultTable .= $tmpTable;
+    $resultTable .= "</table>";
+
+    echo $resultTable;
+
+    $navigation = '<ul id="navigation">';
+
+    for ($i = 1; $i <= $numberOfPages; $i++) {
+      $navigation .= "<li><a href=\"pagination.php?page=$i\" onclick=\"handlePagination(event)\">$i</li>";
+    }
+
+    $navigation .= '</ul>';
+
+    echo $navigation;
+  }
+  catch (PDOException $ex) {
+    $message = $ex->getMessage();
+    echo $message;
+  }
 }
