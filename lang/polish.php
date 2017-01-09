@@ -44,5 +44,9 @@ $langArray = array(
   'save' => 'Zapisz',
   'rowDeleteMessage' => "Pomyślnie usunięto wpis",
   'updateRowMessage' => 'Pomyślnie zaktualizowano wpis',
-  'addEntryMessage' => 'Pomyślnie dodano wpis'
+  'addEntryMessage' => 'Pomyślnie dodano wpis',
+  'chooseFile' => 'WYBIERZ PLIK:',
+  'chooseFormat' => 'WYBIERZ FORMAT:',
+  'sendFile' => 'Wyślij',
+  'resultsOnPage' => 'Ilość wyników na stronie:'
 );

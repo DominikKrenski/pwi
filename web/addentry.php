@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     echo "<div class=\"connection-error\">
             <div class=\"connection-error-header\">
-              <h2>". $langArray['error-header'] ."</h2>
+              <h2>". $langArray['errorHeader'] ."</h2>
             </div>
             <div class=\"connection-error-content\">
               <p>$message</p>

@@ -44,5 +44,9 @@ $langArray = array(
   'save' => 'Save',
   'rowDeleteMessage' => "Row has been deleted successfully",
   'updateRowMessage' => 'Row has been updated successfully',
-  'addEntryMessage' => "Row has been added successfully"
+  'addEntryMessage' => "Row has been added successfully",
+  'chooseFile' => 'CHOOSE FILE:',
+  'chooseFormat' => 'CHOOSE FORMAT:',
+  'sendFile' => 'Send',
+  'resultsOnPage' => 'Results per page:'
 );

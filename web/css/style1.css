@@ -2,13 +2,14 @@
 body {
   margin-top: 0px;
   background-image: url('../images/blue_background.jpg');
+  background-repeat: repeat-y;
 }
 /*========KONIEC=====================*/
 
 /* Ogólne style związane z elementem BODY */
 #container {
   width: 95%;
-  height: 1000px;
+  height: 2000px;
   background-color: rgba(16, 103, 173, 0.95);
   margin-left: auto;
   margin-right: auto;
@@ -339,7 +340,7 @@ body {
 /* Style związane z lewym panelem */
 #left-panel {
   position: absolute;
-  height: 1000px;
+  height: 2000px;
   width: 15%;
   background-color: rgba(6, 49, 83, 0.95);
   border-radius: 15px 0px 0px 15px;
@@ -406,7 +407,7 @@ body {
 
 #structure-table th, #structure-table td {
   border: 1px solid white;
-  width: 150px;
+  width: 130px;
   text-align: center;
 }
 

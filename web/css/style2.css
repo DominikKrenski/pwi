@@ -2,6 +2,7 @@
 body {
   margin-top: 0px;
   background-image: url('../images/gray_background.png');
+  background-repeat: repeat-y;
   font-family: cursive;
 }
 /*========KONIEC=====================*/
@@ -9,7 +10,7 @@ body {
 /* Ogólne style związane z elementem BODY */
 #container {
   width: 95%;
-  height: 1000px;
+  height: 2000px;
   background-color: rgba(43, 56, 68, 0.95);
   margin-left: auto;
   margin-right: auto;
@@ -267,7 +268,7 @@ body {
 /* Style związane z lewym panelem */
 #left-panel {
   position: absolute;
-  height: 1000px;
+  height: 2000px;
   width: 15%;
   background-color: rgba(94, 99, 102, 0.99);
   border: 0px solid #000000;

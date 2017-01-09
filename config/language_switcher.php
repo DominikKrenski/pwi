@@ -7,17 +7,17 @@ if (isset($_GET['lang'])) {
   {
     case 'pl':
     $_SESSION['lang'] = $lang;
-    setcookie('lang', $lang, time() + 60);
+    setcookie('lang', $lang, time() + 3600);
     break;
 
     case 'en':
     $_SESSION['lang'] = $lang;
-    setcookie('lang', $lang, time() + 60);
+    setcookie('lang', $lang, time() + 3600);
     break;
 
     default:
     $_SESSION['lang'] = 'pl';
-    setcookie('lang', 'pl', time() + 60);
+    setcookie('lang', 'pl', time() + 3600);
     $lang = 'pl';
   }
 

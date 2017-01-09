@@ -67,11 +67,21 @@ function parseForm(file)
     var form = document.forms[0];
     var data = new FormData();
 
+    console.log(form);
+
     data.append('query', query[0]);
 
-    for (var i = 1; i < form.elements.length - 1; i++) {
+    //for (var i = 1; i < form.elements.length - 1; i++) {
+    for (var i = 1; i < 4; i++) {
       if (form.elements[i].checked) {
         data.append('format', form.elements[i].value);
+      }
+    }
+
+    for (var i = 4; i < form.elements.length - 1; i++) {
+      console.log(form.elements[i]);
+      if (form.elements[i].checked) {
+        data.append('pagination', form.elements[i].value);
       }
     }
     var ajaxRequest = createAjaxRequest();
@@ -118,4 +128,12 @@ function handlePagination(event)
   }
 
   ajaxRequest.send(null);
+}
+
+function addPaginationRow(event)
+{
+  event.preventDefault();
+  event.stopPropagation();
+
+  document.getElementById('pagination').style.display = 'block';
 }

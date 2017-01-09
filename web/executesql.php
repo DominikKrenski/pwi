@@ -8,28 +8,33 @@ require_once "../lang/$langFile";
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   echo "<div id=\"execute-sql-form-div\">
           <form id=\"execute-sql-form\" method=\"POST\" action=\"executesql.php\">
-            <p>WYBIERZ PLIK:</p>
+            <p>". $langArray['chooseFile'] ."</p>
             <input type=\"file\" id=\"file-input\">
-            <p>WYBIERZ FORMAT:</p>
-            <input type=\"radio\" name=\"responseFormat\" value=\"html\" checked>HTML<br>
-            <input type=\"radio\" name=\"responseFormat\" value=\"json\">JSON<br>
+            <p>". $langArray['chooseFormat'] ."</p>
+            <input type=\"radio\" name=\"responseFormat\" value=\"json\" checked>JSON<br>
             <input type=\"radio\" name=\"responseFormat\" value=\"text\">TEXT<br>
-            <input id=\"submit-file\" type=\"submit\" value=\"Wyślij\" onclick=\"executeSQL(event)\">
+            <input type=\"radio\" name=\"responseFormat\" value=\"html\" onchange=\"addPaginationRow(event)\">HTML<br>
+            <div style=\"display:none\" id=\"pagination\">
+              <p>". $langArray['resultsOnPage'] ."</p>
+              <input type=\"radio\" name=\"pagination\" value=\"5\">5
+              <input type=\"radio\" name=\"pagination\" value=\"10\" checked>10
+              <input type=\"radio\" name=\"pagination\" value=\"15\">15<br>
+            </div>
+            <input id=\"submit-file\" type=\"submit\" value=\"". $langArray['sendFile'] ."\" onclick=\"executeSQL(event)\">
           </form>
       </div>";
 }
 
-if (isset($_POST['query']) && isset($_POST['format'])) {
+if (isset($_POST['query']) && isset($_POST['format']) && isset($_POST['pagination'])) {
   $query = $_POST['query'];
   $format = $_POST['format'];
+  $pagination = intval($_POST['pagination']);
 
   try {
     $connection = new PDO($_SESSION['dsn'], $_SESSION['userName'], $_SESSION['userPassword'], [
       PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       PDO::FETCH_NUM
     ]);
-
-    //$result = $connection->query($query, PDO::FETCH_ASSOC);
 
     if (preg_match("/^select/i", $query)) {
       if ($format == 'text') {
@@ -44,14 +49,21 @@ if (isset($_POST['query']) && isset($_POST['format'])) {
         generateJsonResponse($result);
       }
       else {
-        //generateHtmlResponse($result);
-        generateHtmlResponse($connection, $query);
+        generateHtmlResponse($connection, $query, $pagination);
       }
     }
   }
   catch (PDOException $ex) {
     $message = $ex->getMessage();
-    echo $message;
+
+    echo "<div class=\"connection-error\">
+            <div class=\"connection-error-header\">
+              <h2>". $langArray['errorHeader'] . "</h2>
+            </div>
+            <div class=\"connection-error-content\">
+              <p>$message</p>
+            </div>
+          </div>";
   }
 }
 
@@ -81,7 +93,7 @@ function generateJsonResponse($result)
   echo '</div>';
 }
 
-function generateHtmlResponse($connection, $query)
+function generateHtmlResponse($connection, $query, $pagination)
 {
 
   $tableKeys = [];
@@ -90,6 +102,7 @@ function generateHtmlResponse($connection, $query)
   $tmpTable = "";
 
   try {
+
     /* Pierwsze zapytanie ma na celu sprawdzenie ile wyników
      * zostało zwróconych
     */
@@ -99,16 +112,16 @@ function generateHtmlResponse($connection, $query)
       $numberOfRows++;
     }
 
-    $numberOfPages = ceil($numberOfRows / 10);
+    $numberOfPages = ceil($numberOfRows / $pagination);
 
     $query1 = rtrim($query, ';');
 
     $_SESSION['customQuery'] = $query1;
-    $_SESSION['rowsPerPage'] = 10;
+    $_SESSION['rowsPerPage'] = $pagination;
     $_SESSION['numberOfRows'] = $numberOfRows;
     $_SESSION['numberOfPages'] = $numberOfPages;
 
-    $query1 = $query1 . " limit 0, 10;";
+    $query1 = $query1 . " limit 0, $pagination;";
 
     $counter = 0;
 
@@ -149,9 +162,19 @@ function generateHtmlResponse($connection, $query)
     $navigation .= '</ul>';
 
     echo $navigation;
+
+
   }
   catch (PDOException $ex) {
     $message = $ex->getMessage();
-    echo $message;
+
+    echo "<div class=\"connection-error\">
+            <div class=\"connection-error-header\">
+              <h2>". $langArray['errorHeader'] ."</h2>
+            </div>
+            <div class=\"connection-error-content\">
+              <p>$message</p>
+            </div>
+          </div>";
   }
 }

@@ -2,6 +2,9 @@
 
 session_start();
 
+require_once '../config/language_switcher.php';
+require_once "../lang/$langFile";
+
 if (isset($_GET['page'])) {
 
   $counter = 0;
@@ -61,7 +64,15 @@ if (isset($_GET['page'])) {
   }
   catch (PDOException $ex) {
     $message = $ex->getMessage();
-    echo $message;
+
+    echo "<div class=\"connection-error\">
+            <div class=\"connection-error-header\">
+              <h2>". $langArray['errorHeader'] . "</h2>
+            </div>
+            <div class=\"connection-error-content\">
+              <p>$message</p>
+            </div>
+          </div>";
   }
 }
 
